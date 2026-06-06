@@ -24,7 +24,7 @@ botaoPlay.addEventListener('click', function() {
     setTimeout(function() {
         gameBoard.classList.add('cenario2');
         botaoPlay.style.display = 'none'; 
-        document.querySelector("#personagem").style.display = "block";
+        
 
         
 
