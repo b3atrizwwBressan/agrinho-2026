@@ -56,13 +56,15 @@ background-image: url('cenario1.webp');
     font-size: 24px;
     color: white;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-    text-align: center;
+    display: none; /* Começa escondida */
+    cursor: pointer;
+    user-select: none;
+
+    /* NOVO POSICIONAMENTO: Canto superior esquerdo */
     position: absolute;
-    top: 80%;
-    left: 10%;
-    transform: translate(-50%, -50%);
-    display: none;
+    top: 20px;       /* Distância do topo da tela */
+    left: 20px;      /* Distância da borda esquerda */
+    text-align: left; /* Alinha o texto para a esquerda */
     
-    cursor: pointer; /* ADICIONE ISSO: Avisa o jogador que o texto é clicável */
-    user-select: none; /* Opcional: impede que o texto fique azul/selecionado ao clicar rápido */
+    /* Removemos o 'transform' antigo para ele não puxar o texto para o centro */
 }
