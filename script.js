@@ -33,11 +33,14 @@ botaoPlay.addEventListener('click', function() {
 
         gameBoard.classList.remove('escurecer');
 
-        document.querySelector("personagem").style.display = "block";
+        
         jogoIniciado = true; // Libera os cliques para passar de frase
     }, 500);
 });
 
+
+   
+     document.querySelector("personagem").style.display = "block";
 // 2. Evento que detecta o clique na caixa de mensagem para avançar
 caixaMensagem.addEventListener('click', function() {
     if (jogoIniciado) {
