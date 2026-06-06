@@ -84,19 +84,14 @@ background-image: url('cenario1.webp');
 }
     
 
-.player {
-    width: 332px;
-    height: 332px;
-    background: url("personagem.png");
-    animation: andar 0.8s steps(4) infinite;
+.Skin {
+    width: 345px;
     position: absolute;
-    left: 300px;
-    bottom: 100px;
-    display: none;
-}
+    bottom:  -2;
+    z-index: 2;
+    left: 0;
 
-@keyframes andar {
-    from { background-position: 0px; }
-    to   { background-position: -128px; }
 }
-   
+.jump {
+    animation: jump 1s ease-out;
+}
