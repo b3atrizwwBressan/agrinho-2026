@@ -85,8 +85,8 @@ background-image: url('cenario1.webp');
     
 
 .player {
-    width: 132px;
-    height: 132px;
+    width: 332px;
+    height: 332px;
     background: url("personagem.png");
     animation: andar 0.8s steps(4) infinite;
     position: absolute;
