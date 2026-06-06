@@ -62,8 +62,8 @@ background-image: url('cenario1.webp');
 
     /* NOVO POSICIONAMENTO: Canto superior esquerdo */
     position: absolute;
-    top: 20px;       /* Distância do topo da tela */
-    left: 20px;      /* Distância da borda esquerda */
+    top: 5px;       /* Distância do topo da tela */
+    left: 50px;      /* Distância da borda esquerda */
     text-align: left; /* Alinha o texto para a esquerda */
     
     /* Removemos o 'transform' antigo para ele não puxar o texto para o centro */
