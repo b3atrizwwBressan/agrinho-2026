@@ -2,3 +2,22 @@ h1 {
     color: rgb(8, 71, 24);
 }
 
+game-board {
+width: 80%;
+height: 500px;
+border: 1px solid #333;
+margin: 0 auto;
+position: relative;
+overflow: hidden;
+background-image: url('cenario 1 do jogo, inicial.webp');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.botao {
+     position: fixed; 
+    left: 20px;
+    bottom: 20px;
+}
+
