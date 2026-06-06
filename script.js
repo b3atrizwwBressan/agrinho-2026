@@ -52,4 +52,4 @@ caixaMensagem.addEventListener('click', function() {
 });
 
 
-document.querySelector("#personagem").style.display = "block";
+document.querySelector("personagem").style.display = "block";
