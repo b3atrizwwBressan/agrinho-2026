@@ -3,8 +3,8 @@ h1 {
 }
 
 .game-board {
-width: 80%;
-height: 500px;
+width: 100vw;
+height: 100vh;
 border: 1px solid #333;
 margin: 0 auto;
 position: relative;
