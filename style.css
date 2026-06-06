@@ -85,8 +85,21 @@ background-image: url('cenario1.webp');
     
 
 #personagem {
-    display: none;
+    width: 64px;          /* Ajuste para o tamanho do seu boneco */
+    height: 64px;         /* Ajuste para o tamanho do seu boneco */
     position: absolute;
-    left: 300px;
-    bottom: 100px;
+    bottom: 50px;         
+    left: 50px;           
+    
+    /* IMAGEM PADRÃO: Personagem parado (pode ser um GIF estático ou PNG) */
+    background-image: url('Playerparado.png'); 
+    background-repeat: no-repeat;
+    background-size: contain;
+    image-rendering: pixelated; 
+    display: none;        /* Começa escondido no menu */
+}
+
+/* Quando o JS adicionar essa classe, o GIF muda para o dele andando */
+#personagem.movendo {
+    background-image: url('player1.gif');
 }

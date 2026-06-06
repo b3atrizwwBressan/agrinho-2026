@@ -60,3 +60,31 @@ caixaMensagem.addEventListener('click', function() {
 });
 
 
+// 1. Atualizamos o objeto para incluir W e S, além das setas (opcional)
+const teclas = { 
+    a: false, w: false, s: false, d: false, 
+    ArrowUp: false, ArrowDown: false, ArrowLeft: false, ArrowRight: false 
+};
+
+// 2. Detecta quando aperta a tecla: Muda para o GIF de andando
+window.addEventListener('keydown', (evento) => {
+    if (jogoIniciado && evento.key in teclas) {
+        teclas[evento.key] = true;
+        boneco.classList.add('movendo'); // Troca o fundo para 'personagemandando.gif'
+    }
+});
+
+// 3. Detecta quando solta a tecla: Se soltou todas, volta para o GIF parado
+window.addEventListener('keyup', (evento) => {
+    if (evento.key in teclas) {
+        teclas[evento.key] = false;
+    }
+    
+    // Verifica se o jogador soltou absolutamente todas as teclas de movimento
+    const nenhumaTeclaPressionada = !teclas.a && !teclas.w && !teclas.s && !teclas.d && 
+                                    !teclas.ArrowLeft && !teclas.ArrowUp && !teclas.ArrowDown && !teclas.ArrowRight;
+
+    if (nenhumTeclaPressionada) {
+        boneco.classList.remove('movendo'); // Remove a classe e volta para 'personagemparada.gif'
+    }
+});
