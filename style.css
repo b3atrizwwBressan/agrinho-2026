@@ -107,5 +107,7 @@ background-image: url('cenario1.webp');
      width: 200px;          /* Ajuste para o tamanho do seu boneco */
     height: 204px;
     background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
 }
 }
