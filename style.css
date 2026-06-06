@@ -27,7 +27,7 @@ background-image: url('cenario1.webp');
 }
 
 
-/* APENAS COLE ESTA PARTE NOVA NO FINAL DO SEU ARQUIVO: */
+
 
 .game-board::after {
     content: '';
