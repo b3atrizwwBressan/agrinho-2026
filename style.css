@@ -26,3 +26,26 @@ background-image: url('cenario1.webp');
     min-width: 300px;
 }
 
+
+/* APENAS COLE ESTA PARTE NOVA NO FINAL DO SEU ARQUIVO: */
+
+.game-board::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.game-board.escurecer::after {
+    opacity: 1;
+}
+
+.game-board.cenario2 {
+    background-image: url('cenario2.webp'); /* Coloque o nome da sua segunda imagem aqui */
+}
