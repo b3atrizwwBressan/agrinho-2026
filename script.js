@@ -2,6 +2,7 @@ const botaoPlay = document.getElementById('btn-play');
 const musica = document.getElementById('musica-jogo');
 const gameBoard = document.querySelector('.game-board');
 const caixaMensagem = document.getElementById('caixa-mensagem');
+const boneco = document.getElementById('personagem');
 
 // 1. Criamos a lista de frases que vão aparecer em sequência
 const dialogos = [
@@ -23,7 +24,7 @@ botaoPlay.addEventListener('click', function() {
 
     setTimeout(function() {
         gameBoard.classList.add('cenario2');
-        document.querySelector("#personagem").style.display = "block";
+        boneco.style.display = "block";
         botaoPlay.style.display = 'none'; 
         
 
