@@ -49,3 +49,20 @@ background-image: url('cenario1.webp');
 .game-board.cenario2 {
     background-image: url('cenario2.webp'); /* Coloque o nome da sua segunda imagem aqui */
 }
+
+
+#caixa-mensagem {
+    font-family: 'Arial', sans-serif;
+    font-size: 24px;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+    
+    cursor: pointer; /* ADICIONE ISSO: Avisa o jogador que o texto é clicável */
+    user-select: none; /* Opcional: impede que o texto fique azul/selecionado ao clicar rápido */
+}

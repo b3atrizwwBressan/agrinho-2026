@@ -1,26 +1,52 @@
-// Seleciona o botão e o áudio do HTML
 const botaoPlay = document.getElementById('btn-play');
 const musica = document.getElementById('musica-jogo');
-// Seleciona também o game-board para podermos mudar o fundo dele
 const gameBoard = document.querySelector('.game-board');
+const caixaMensagem = document.getElementById('caixa-mensagem');
 
-// Adiciona o evento de clique no botão
+// 1. Criamos a lista de frases que vão aparecer em sequência
+const dialogos = [
+    "Bem-vindo à Renascimento Rural! O jogo começou.",
+    "Uma certa pessoa precisa de sua ajuda...",
+    "Procure por ele em sua casa, ele irá te explicar tudo que precisa saber!",
+    "Boa sorte na sua jornada!",
+    "Para andar, basta somente clicar A-S-D-W para andar."
+];
+
+let fraseAtual = 0; // Começa na primeira frase (posição 0)
+let jogoIniciado = false; // Garante que os cliques só funcionam após o Play
+
 botaoPlay.addEventListener('click', function() {
     musica.play();
-    console.log("A música começou a tocar!");
 
-    // 1. Faz a tela escurecer adicionando a classe do CSS
+    // Escurece a tela
     gameBoard.classList.add('escurecer');
 
-    // 2. Espera 500 milissegundos (o tempo do efeito de fechar a tela)
     setTimeout(function() {
-        
-        // 3. Troca o cenário de fundo e esconde o botão de Play
         gameBoard.classList.add('cenario2');
         botaoPlay.style.display = 'none'; 
 
-        // 4. Remove o efeito preto para o novo cenário aparecer
-        gameBoard.classList.remove('escurecer');
+        // Mostra a primeira frase da lista
+        caixaMensagem.style.display = 'block';
+        caixaMensagem.innerText = dialogos[fraseAtual];
 
+        gameBoard.classList.remove('escurecer');
+        jogoIniciado = true; // Libera os cliques para passar de frase
     }, 500);
+});
+
+// 2. Evento que detecta o clique na caixa de mensagem para avançar
+caixaMensagem.addEventListener('click', function() {
+    if (jogoIniciado) {
+        fraseAtual++; // Avança para a próxima frase (+1)
+
+        // Se ainda sobrarem frases na lista, mostra a próxima
+        if (fraseAtual < dialogos.length) {
+            caixaMensagem.innerText = dialogos[fraseAtual];
+        } else {
+            // Se as frases acabaram, esconde a caixa ou inicia a ação do jogo
+            caixaMensagem.innerText = "";
+            caixaMensagem.style.display = 'none';
+            console.log("Diálogo encerrado! O jogador já pode mover o personagem.");
+        }
+    }
 });
