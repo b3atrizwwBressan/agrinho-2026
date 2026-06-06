@@ -4,6 +4,7 @@ const gameBoard = document.querySelector('.game-board');
 const caixaMensagem = document.getElementById('caixa-mensagem');
 const boneco = document.getElementById('personagem');
 let posicaoX = 50; 
+let posicaoY = 50; // ADICIONE ISSO: Posição inicial de altura do boneco
 const velocidade = 8;
 
 // 1. Criamos a lista de frases que vão aparecer em sequência
@@ -69,50 +70,67 @@ const teclas = {
     ArrowUp: false, ArrowDown: false, ArrowLeft: false, ArrowRight: false 
 };
 
-// 2. Quando APERTA a tecla: adiciona a classe que muda para o GIF andando
+// Quando APERTA qualquer tecla de andar, muda para o GIF andando
 window.addEventListener('keydown', (evento) => {
-    if (jogoIniciado && evento.key in teclas) {
-        teclas[evento.key] = true;
-        boneco.classList.add('movendo'); // Ativa o player1.gif do seu CSS
+    // Converte a tecla para minúscula (caso o CapsLock esteja ativo)
+    const teclaPressionada = evento.key.toLowerCase();
+
+    if (jogoIniciado && (teclaPressionada in teclas || evento.key in teclas)) {
+        if (teclaPressionada in teclas) teclas[teclaPressionada] = true;
+        if (evento.key in teclas) teclas[evento.key] = true;
+        
+        boneco.classList.add('movendo'); // Troca para o GIF andando (player1.gif)
     }
 });
 
-// 3. Quando SOLTA a tecla: verifica se soltou tudo para voltar ao GIF parado
+// Quando SOLTA a tecla, verifica se não há mais NENHUMA pressionada para voltar a ficar parado
 window.addEventListener('keyup', (evento) => {
-    if (evento.key in teclas) {
-        teclas[evento.key] = false;
-    }
+    const teclaSolta = evento.key.toLowerCase();
+
+    if (teclaSolta in teclas) teclas[teclaSolta] = false;
+    if (evento.key in teclas) teclas[evento.key] = false;
     
-    // Se não tiver nenhuma tecla de movimento sendo segurada
+    // Verifica se TODAS as teclas estão falsas (ou seja, dedão fora do teclado)
     const nenhumaTeclaPressionada = !teclas.a && !teclas.w && !teclas.s && !teclas.d && 
                                     !teclas.ArrowLeft && !teclas.ArrowUp && !teclas.ArrowDown && !teclas.ArrowRight;
 
-    if (nenhumTeclaPressionada) {
-        boneco.classList.remove('movendo'); // Volta para o Playerparado.png do seu CSS
+    if (nenhumaTeclaPressionada) {
+        boneco.classList.remove('movendo'); // Remove a animação e volta para o parado (Playerparado.png)
     }
 });
 
-// 4. O Loop que atualiza a posição da personagem na tela suavemente
+
+// ==========================================
+// LOOP DE MOVIMENTAÇÃO (4 DIREÇÕES)
+// ==========================================
 function atualizarJogo() {
     if (jogoIniciado) {
-        // Se andar para a direita (D ou Seta Direita)
+        // IR PARA A DIREITA (D ou Seta Direita)
         if (teclas.d || teclas.ArrowRight) {
             posicaoX += velocidade;
             boneco.style.transform = "scaleX(1)"; // Olha para a direita
         }
-        // Se andar para a esquerda (A ou Seta Esquerda)
+        // IR PARA A ESQUERDA (A ou Seta Esquerda)
         if (teclas.a || teclas.ArrowLeft) {
             posicaoX -= velocidade;
-            boneco.style.transform = "scaleX(-1)"; // Espelha a imagem para olhar para a esquerda
+            boneco.style.transform = "scaleX(-1)"; // Olha para a esquerda
+        }
+        // IR PARA CIMA (W ou Seta Para Cima)
+        if (teclas.w || teclas.ArrowUp) {
+            posicaoY += velocidade; // Sobe no cenário
+        }
+        // IR PARA BAIXO (S ou Seta Para Baixo)
+        if (teclas.s || teclas.ArrowDown) {
+            posicaoY -= velocidade; // Desce no cenário
         }
         
-        // Aplica o movimento no CSS do boneco
+        // Aplica os novos valores de posição no CSS do personagem
         boneco.style.left = posicaoX + "px";
+        boneco.style.bottom = posicaoY + "px"; // Altera a altura dinamicamente
     }
     
-    // Fica rodando essa função a cada milissegundo em segundo plano
     requestAnimationFrame(atualizarJogo);
 }
 
-// Inicializa o sistema de movimento
+// Inicializa o sistema
 atualizarJogo();
