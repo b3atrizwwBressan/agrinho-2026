@@ -74,5 +74,12 @@ background-image: url('cenario1.webp');
     /* EXTRA: Uma borda fina cinza para parecer uma janela de jogo antiga */
     border: 2px solid #555; 
 }
+
+
+.LOGOsite {
+    width: 200px;        /* Ou o tamanho que você quiser */
+    height: auto;        /* ISSO IMPEDE A IMAGEM DE FICAR TORTA/ESTRETCHADA */
+    object-fit: contain; /* Garante que ela mantenha a proporção original */
+}
     
    
