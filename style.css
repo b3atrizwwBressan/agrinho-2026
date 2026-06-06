@@ -84,14 +84,9 @@ background-image: url('cenario1.webp');
 }
     
 
-.Skin {
-    width: 345px;
+#personagem {
+    display: none;
     position: absolute;
-    bottom:  -2;
-    z-index: 2;
-    left: 0;
-
-}
-.jump {
-    animation: jump 1s ease-out;
+    left: 300px;
+    bottom: 100px;
 }
