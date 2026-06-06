@@ -21,8 +21,8 @@ background-image: url('cenario1.webp');
      position: fixed; 
     left: 5px;
     bottom: 10px;
-    width: 20vw;
-    max-width: 300px;
-    min-width: 150px;
+    width: 40vw;
+    max-width: 600px;
+    min-width: 300px;
 }
 
