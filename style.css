@@ -85,8 +85,8 @@ background-image: url('cenario1.webp');
     
 
 #personagem {
-    width: 520px;          /* Ajuste para o tamanho do seu boneco */
-    height: 524px;         /* Ajuste para o tamanho do seu boneco */
+    width: 400px;          /* Ajuste para o tamanho do seu boneco */
+    height: 404px;         /* Ajuste para o tamanho do seu boneco */
     position: absolute;
     bottom: 1px;         
     left: 5px;    
