@@ -93,7 +93,7 @@ background-image: url('cenario1.webp');
           
     
     /* IMAGEM PADRÃO: Personagem parado (pode ser um GIF estático ou PNG) */
-    background-image: url('Playerparado.png'); 
+    background-image: url('playerparado.png'); 
     background-repeat: no-repeat;
     background-size: contain;
     image-rendering: pixelated; 
