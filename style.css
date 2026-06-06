@@ -82,4 +82,16 @@ background-image: url('cenario1.webp');
     object-fit: contain; /* Garante que ela mantenha a proporção original */
 }
     
+
+.player {
+    width: 32px;
+    height: 32px;
+    background: url("personagem.png");
+    animation: andar 0.8s steps(4) infinite;
+}
+
+@keyframes andar {
+    from { background-position: 0px; }
+    to   { background-position: -128px; }
+}
    
