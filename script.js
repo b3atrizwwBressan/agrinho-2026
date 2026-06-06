@@ -24,6 +24,7 @@ botaoPlay.addEventListener('click', function() {
     setTimeout(function() {
         gameBoard.classList.add('cenario2');
         botaoPlay.style.display = 'none'; 
+        document.querySelector("#personagem").style.display = "block";
 
         
 
@@ -40,7 +41,7 @@ botaoPlay.addEventListener('click', function() {
 
 
    
-     document.querySelector("personagem").style.display = "block";
+     
 // 2. Evento que detecta o clique na caixa de mensagem para avançar
 caixaMensagem.addEventListener('click', function() {
     if (jogoIniciado) {
