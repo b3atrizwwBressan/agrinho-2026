@@ -52,7 +52,7 @@ background-image: url('cenario1.webp');
 
 
 #caixa-mensagem {
-    font-family: 'Arial', sans-serif;
+    font-family: "Jersey 10", sans-serif;
     font-size: 24px;
     color: white;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
@@ -62,8 +62,8 @@ background-image: url('cenario1.webp');
 
     /* NOVO POSICIONAMENTO: Canto superior esquerdo */
     position: absolute;
-    top: 5px;       /* Distância do topo da tela */
-    left: 50px;      /* Distância da borda esquerda */
+    top: 7px;       /* Distância do topo da tela */
+    left: 30px;      /* Distância da borda esquerda */
     text-align: left; /* Alinha o texto para a esquerda */
     
     /* Removemos o 'transform' antigo para ele não puxar o texto para o centro */
