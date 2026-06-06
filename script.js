@@ -70,7 +70,7 @@ const teclas = {
 window.addEventListener('keydown', (evento) => {
     if (jogoIniciado && evento.key in teclas) {
         teclas[evento.key] = true;
-        boneco.classList.add('movendo'); // Troca o fundo para 'personagemandando.gif'
+        boneco.classList.add('.movendo'); // Troca o fundo para 'personagemandando.gif'
     }
 });
 
@@ -85,6 +85,6 @@ window.addEventListener('keyup', (evento) => {
                                     !teclas.ArrowLeft && !teclas.ArrowUp && !teclas.ArrowDown && !teclas.ArrowRight;
 
     if (nenhumTeclaPressionada) {
-        boneco.classList.remove('movendo'); // Remove a classe e volta para 'personagemparada.gif'
+        boneco.classList.remove('.movendo'); // Remove a classe e volta para 'personagemparada.gif'
     }
 });
