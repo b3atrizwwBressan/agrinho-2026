@@ -3,6 +3,8 @@ const musica = document.getElementById('musica-jogo');
 const gameBoard = document.querySelector('.game-board');
 const caixaMensagem = document.getElementById('caixa-mensagem');
 const boneco = document.getElementById('personagem');
+let posicaoX = 50; 
+const velocidade = 8;
 
 // 1. Criamos a lista de frases que vão aparecer em sequência
 const dialogos = [
@@ -62,31 +64,55 @@ caixaMensagem.addEventListener('click', function() {
 });
 
 
-// 1. Atualizamos o objeto para incluir W e S, além das setas (opcional)
 const teclas = { 
     a: false, w: false, s: false, d: false, 
     ArrowUp: false, ArrowDown: false, ArrowLeft: false, ArrowRight: false 
 };
 
-// 2. Detecta quando aperta a tecla: Muda para o GIF de andando
+// 2. Quando APERTA a tecla: adiciona a classe que muda para o GIF andando
 window.addEventListener('keydown', (evento) => {
     if (jogoIniciado && evento.key in teclas) {
         teclas[evento.key] = true;
-        boneco.classList.add('.movendo'); // Troca o fundo para 'personagemandando.gif'
+        boneco.classList.add('movendo'); // Ativa o player1.gif do seu CSS
     }
 });
 
-// 3. Detecta quando solta a tecla: Se soltou todas, volta para o GIF parado
+// 3. Quando SOLTA a tecla: verifica se soltou tudo para voltar ao GIF parado
 window.addEventListener('keyup', (evento) => {
     if (evento.key in teclas) {
         teclas[evento.key] = false;
     }
     
-    // Verifica se o jogador soltou absolutamente todas as teclas de movimento
+    // Se não tiver nenhuma tecla de movimento sendo segurada
     const nenhumaTeclaPressionada = !teclas.a && !teclas.w && !teclas.s && !teclas.d && 
                                     !teclas.ArrowLeft && !teclas.ArrowUp && !teclas.ArrowDown && !teclas.ArrowRight;
 
     if (nenhumTeclaPressionada) {
-        boneco.classList.remove('.movendo'); // Remove a classe e volta para 'personagemparada.gif'
+        boneco.classList.remove('movendo'); // Volta para o Playerparado.png do seu CSS
     }
 });
+
+// 4. O Loop que atualiza a posição da personagem na tela suavemente
+function atualizarJogo() {
+    if (jogoIniciado) {
+        // Se andar para a direita (D ou Seta Direita)
+        if (teclas.d || teclas.ArrowRight) {
+            posicaoX += velocidade;
+            boneco.style.transform = "scaleX(1)"; // Olha para a direita
+        }
+        // Se andar para a esquerda (A ou Seta Esquerda)
+        if (teclas.a || teclas.ArrowLeft) {
+            posicaoX -= velocidade;
+            boneco.style.transform = "scaleX(-1)"; // Espelha a imagem para olhar para a esquerda
+        }
+        
+        // Aplica o movimento no CSS do boneco
+        boneco.style.left = posicaoX + "px";
+    }
+    
+    // Fica rodando essa função a cada milissegundo em segundo plano
+    requestAnimationFrame(atualizarJogo);
+}
+
+// Inicializa o sistema de movimento
+atualizarJogo();
