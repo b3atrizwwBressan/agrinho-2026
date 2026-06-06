@@ -53,7 +53,7 @@ background-image: url('cenario1.webp');
 
 #caixa-mensagem {
     font-family: "Pixelify Sans", sans-serif;
-    font-size: 24px;
+    font-size: 33px;
     color: white;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
     display: none; /* Começa escondida */
@@ -62,9 +62,17 @@ background-image: url('cenario1.webp');
 
     /* NOVO POSICIONAMENTO: Canto superior esquerdo */
     position: absolute;
-    top: 7px;       /* Distância do topo da tela */
-    left: 30px;      /* Distância da borda esquerda */
+    top: 13px;       /* Distância do topo da tela */
+    left: 15px;      /* Distância da borda esquerda */
     text-align: left; /* Alinha o texto para a esquerda */
+
+    /* A CAIXA ESCURA */
+    background-color: rgba(0, 0, 0, 0.6); /* Preto com 60% de opacidade */
+    padding: 15px 25px;                   /* Espaço interno para respirar (cima/baixo e lados) */
+    border-radius: 8px;                   /* Deixa as bordas levemente arredondadas (opcional) */
     
-    /* Removemos o 'transform' antigo para ele não puxar o texto para o centro */
+    /* EXTRA: Uma borda fina cinza para parecer uma janela de jogo antiga */
+    border: 2px solid #555; 
 }
+    
+   
