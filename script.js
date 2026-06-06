@@ -9,7 +9,7 @@ const dialogos = [
     "Uma certa pessoa precisa de sua ajuda...",
     "Procure por ele em sua casa, ele irá te explicar tudo que precisa saber!",
     "Boa sorte na sua jornada!",
-    "Para andar, basta somente clicar A-S-D-W para andar."
+    "Para andar, basta somente clicar A-S-D-W"
 ];
 
 let fraseAtual = 0; // Começa na primeira frase (posição 0)
