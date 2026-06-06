@@ -105,4 +105,7 @@ background-image: url('cenario1.webp');
     background-image: url('player1.gif');
      width: 460px;          /* Ajuste para o tamanho do seu boneco */
     height: 464px;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
 }
