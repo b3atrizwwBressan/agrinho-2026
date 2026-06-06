@@ -85,11 +85,11 @@ background-image: url('cenario1.webp');
     
 
 #personagem {
-    width: 600px;          /* Ajuste para o tamanho do seu boneco */
-    height: 604px;         /* Ajuste para o tamanho do seu boneco */
+    width: 550px;          /* Ajuste para o tamanho do seu boneco */
+    height: 554px;         /* Ajuste para o tamanho do seu boneco */
     position: absolute;
-    bottom: 50px;         
-    left: 50px;           
+    bottom: 10px;         
+    left: 5px;           
     
     /* IMAGEM PADRÃO: Personagem parado (pode ser um GIF estático ou PNG) */
     background-image: url('Playerparado.png'); 
