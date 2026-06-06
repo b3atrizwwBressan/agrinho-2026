@@ -48,6 +48,7 @@ background-image: url('cenario1.webp');
 
 .game-board.cenario2 {
     background-image: url('cenario2.webp'); /* Coloque o nome da sua segunda imagem aqui */
+    position: relative;
 }
 
 
@@ -88,6 +89,10 @@ background-image: url('cenario1.webp');
     height: 32px;
     background: url("personagem.png");
     animation: andar 0.8s steps(4) infinite;
+    position: absolute;
+    left: 300px;
+    bottom: 100px;
+    display: none;
 }
 
 @keyframes andar {

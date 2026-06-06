@@ -50,3 +50,6 @@ caixaMensagem.addEventListener('click', function() {
         }
     }
 });
+
+
+document.querySelector(".player").style.display = "block";
