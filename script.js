@@ -25,13 +25,15 @@ botaoPlay.addEventListener('click', function() {
         gameBoard.classList.add('cenario2');
         botaoPlay.style.display = 'none'; 
 
-        document.querySelector("personagem").style.display = "block";
+        
 
         // Mostra a primeira frase da lista
         caixaMensagem.style.display = 'block';
         caixaMensagem.innerText = dialogos[fraseAtual];
 
         gameBoard.classList.remove('escurecer');
+
+        document.querySelector("personagem").style.display = "block";
         jogoIniciado = true; // Libera os cliques para passar de frase
     }, 500);
 });
