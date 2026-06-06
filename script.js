@@ -25,6 +25,8 @@ botaoPlay.addEventListener('click', function() {
         gameBoard.classList.add('cenario2');
         botaoPlay.style.display = 'none'; 
 
+        document.querySelector("personagem").style.display = "block";
+
         // Mostra a primeira frase da lista
         caixaMensagem.style.display = 'block';
         caixaMensagem.innerText = dialogos[fraseAtual];
@@ -52,4 +54,3 @@ caixaMensagem.addEventListener('click', function() {
 });
 
 
-document.querySelector("personagem").style.display = "block";

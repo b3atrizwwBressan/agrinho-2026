@@ -85,7 +85,7 @@ background-image: url('cenario1.webp');
     
 
 #personagem {
-    
+    display: none;
     position: absolute;
     left: 300px;
     bottom: 100px;
