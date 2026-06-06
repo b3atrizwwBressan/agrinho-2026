@@ -97,6 +97,7 @@ background-image: url('cenario1.webp');
     background-repeat: no-repeat;
     background-size: contain;
     image-rendering: pixelated; 
+    background-position: center;
     display: none;        /* Começa escondido no menu */
 }
 
@@ -105,6 +106,6 @@ background-image: url('cenario1.webp');
     background-image: url('player1.gif');
      width: 200px;          /* Ajuste para o tamanho do seu boneco */
     height: 204px;
-    
+    background-position: center;
 }
 }
