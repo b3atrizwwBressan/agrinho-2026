@@ -53,7 +53,7 @@ background-image: url('cenario1.webp');
 
 #caixa-mensagem {
     font-family: "Pixelify Sans", sans-serif;
-    font-size: 33px;
+    font-size: 28px;
     color: white;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
     display: none; /* Começa escondida */
