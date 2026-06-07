@@ -68,22 +68,21 @@ caixaMensagem.addEventListener('click', function() {
 // ==========================================
 // CONTROLES DO TECLADO (A-W-S-D e Setas)
 // ==========================================
-
 const teclas = { 
     a: false, w: false, s: false, d: false, 
-    ArrowLeft: false, ArrowUp: false, ArrowDown: false, ArrowRight: false 
+    ArrowUp: false, ArrowDown: false, ArrowLeft: false, ArrowRight: false 
 };
 
 // Quando APERTA qualquer tecla de andar, muda para o GIF andando
 window.addEventListener('keydown', (evento) => {
+    // Converte a tecla para minúscula (caso o CapsLock esteja ativo)
     const teclaPressionada = evento.key.toLowerCase();
 
-    // Verifica se a tecla pressionada existe no nosso objeto de teclas
     if (jogoIniciado && (teclaPressionada in teclas || evento.key in teclas)) {
         if (teclaPressionada in teclas) teclas[teclaPressionada] = true;
         if (evento.key in teclas) teclas[evento.key] = true;
         
-        boneco.classList.add('movendo'); // Troca para o GIF
+        boneco.classList.add('movendo'); // Troca para o GIF andando (player1.gif)
     }
 });
 
@@ -94,14 +93,47 @@ window.addEventListener('keyup', (evento) => {
     if (teclaSolta in teclas) teclas[teclaSolta] = false;
     if (evento.key in teclas) teclas[evento.key] = false;
     
-    // Checa se o jogador soltou absolutamente tudo
+    // Verifica se TODAS as teclas estão falsas (ou seja, dedão fora do teclado)
     const nenhumaTeclaPressionada = !teclas.a && !teclas.w && !teclas.s && !teclas.d && 
                                     !teclas.ArrowLeft && !teclas.ArrowUp && !teclas.ArrowDown && !teclas.ArrowRight;
 
-    if (nenhumTeclaPressionada) {
-        boneco.classList.remove('movendo'); // Volta para a imagem parada
+    if (nenhumaTeclaPressionada) {
+        boneco.classList.remove('movendo'); // Remove a animação e volta para o parado (Playerparado.png)
     }
 });
 
 
-//
+// ==========================================
+// LOOP DE MOVIMENTAÇÃO (4 DIREÇÕES)
+// ==========================================
+function atualizarJogo() {
+    if (jogoIniciado) {
+        // IR PARA A DIREITA (D ou Seta Direita)
+        if (teclas.d || teclas.ArrowRight) {
+            posicaoX += velocidade;
+            boneco.style.transform = "scaleX(1)"; // Olha para a direita
+        }
+        // IR PARA A ESQUERDA (A ou Seta Esquerda)
+        if (teclas.a || teclas.ArrowLeft) {
+            posicaoX -= velocidade;
+            boneco.style.transform = "scaleX(-1)"; // Olha para a esquerda
+        }
+        // IR PARA CIMA (W ou Seta Para Cima)
+        if (teclas.w || teclas.ArrowUp) {
+            posicaoY += velocidade; // Sobe no cenário
+        }
+        // IR PARA BAIXO (S ou Seta Para Baixo)
+        if (teclas.s || teclas.ArrowDown) {
+            posicaoY -= velocidade; // Desce no cenário
+        }
+        
+        // Aplica os novos valores de posição no CSS do personagem
+        boneco.style.left = posicaoX + "px";
+        boneco.style.bottom = posicaoY + "px"; // Altera a altura dinamicamente
+    }
+    
+    requestAnimationFrame(atualizarJogo);
+}
+
+// Inicializa o sistema
+atualizarJogo();
