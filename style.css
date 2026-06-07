@@ -110,4 +110,10 @@ background-image: url('cenario1.webp');
     background-size: contain;
     background-repeat: no-repeat;
 }
+
+
+.game-board.cenario3 {
+    background-image: url('cenario 3.png'); /* Substitua pelo nome do seu arquivo */
+    background-repeat: no-repeat;
+    background-size: cover;
 }

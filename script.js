@@ -133,4 +133,53 @@ function atualizarJogo() {
 }
 
 // Inicializa o sistema
-atualizarJogo();
+function atualizarJogo() {
+    if (jogoIniciado) {
+        // IR PARA A DIREITA (D ou Seta Direita)
+        if (teclas.d || teclas.ArrowRight) {
+            posicaoX += velocidade;
+            boneco.style.transform = "scaleX(1)";
+        }
+        // IR PARA A ESQUERDA (A ou Seta Esquerda)
+        if (teclas.a || teclas.ArrowLeft) {
+            posicaoX -= velocidade;
+            boneco.style.transform = "scaleX(-1)";
+        }
+        // IR PARA CIMA (W ou Seta Para Cima)
+        if (teclas.w || teclas.ArrowUp) {
+            posicaoY += velocidade;
+        }
+        // IR PARA BAIXO (S ou Seta Para Baixo)
+        if (teclas.s || teclas.ArrowDown) {
+            posicaoY -= velocidade;
+        }
+        
+        // ==========================================
+        // DETECÇÃO DE BORDA: MUDANÇA DE CENÁRIO
+        // ==========================================
+        
+        // Se o jogador estiver no Cenário 2 e passar da borda direita (X > 750)
+        if (cenarioAtual === 2 && posicaoX > 750) {
+            // 1. Remove o fundo do cenário 2 e adiciona o do cenário 3
+            gameBoard.classList.remove('cenario2');
+            gameBoard.classList.add('cenario3');
+            
+            // 2. Atualiza a variável para o JS saber que mudou
+            cenarioAtual = 3;
+            
+            // 3. Teleporta o boneco de volta para o início do lado esquerdo (para ele entrar no Cenário 3 andando)
+            posicaoX = 10; 
+        }
+
+        // Bloqueia o boneco de sumir da tela pelo lado esquerdo (borda mínima)
+        if (posicaoX < 0) {
+            posicaoX = 0;
+        }
+
+        // Aplica os valores de posição na tela
+        boneco.style.left = posicaoX + "px";
+        boneco.style.bottom = posicaoY + "px";
+    }
+    
+    requestAnimationFrame(atualizarJogo);
+}
