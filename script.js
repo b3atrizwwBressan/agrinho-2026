@@ -1,69 +1,50 @@
-const botaoPlay = document.getElementById('btn-play');
-const musica = document.getElementById('musica-jogo');
+// ==========================================
+// 1. MAPEAMENTO DOS ELEMENTOS DO HTML
+// ==========================================
 const gameBoard = document.querySelector('.game-board');
-const caixaMensagem = document.getElementById('caixa-mensagem');
 const boneco = document.getElementById('personagem');
-const transicao = document.getElementById('transicao-preta');
+const botaoPlay = document.getElementById('btn-play');
+const caixaMensagem = document.getElementById('caixa-mensagem');
+const transicao = document.getElementById('transicao-preta'); // Nova div preta
 
+// ==========================================
+// 2. VARIÁVEIS DE CONTROLE DO JOGO
+// ==========================================
+let posicaoX = 50;
+let posicaoY = 50;
+const velocidad = 8;
+let cenarioAtual = 2; // Começa movimentação no cenário 2
+let fraseAtual = 0;
+let jogoIniciado = false;
+let dialogosTerminados = false;
 
-let posicaoX = 50; 
-let posicaoY = 50; // ADICIONE ISSO: Posição inicial de altura do boneco
-const velocidade = 8;
-
-// 1. Criamos a lista de frases que vão aparecer em sequência
 const dialogos = [
-    "Bem-vindo à Renascimento Rural! O jogo começou.",
     "Uma certa pessoa precisa de sua ajuda...",
     "Procure por ele em sua casa, ele irá te explicar tudo que precisa saber!",
     "Boa sorte na sua jornada!",
     "Para andar, basta somente clicar A-S-D-W"
 ];
 
-let fraseAtual = 0; // Começa na primeira frase (posição 0)
-let jogoIniciado = false; // Garante que os cliques só funcionam após o Play
+// Dicionário do teclado
+const teclas = { 
+    a: false, w: false, s: false, d: false, 
+    ArrowLeft: false, ArrowUp: false, ArrowDown: false, ArrowRight: false 
+};
 
-botaoPlay.addEventListener('click', function() {
-    musica.play();
-
-    // Escurece a tela
-    gameBoard.classList.add('escurecer');
-
-    setTimeout(function() {
-        gameBoard.classList.add('cenario2');
-        boneco.style.display = "block";
-        botaoPlay.style.display = 'none'; 
-        
-
-        
-
-        // Mostra a primeira frase da lista
+// ==========================================
+// 3. LOGICA DO BOTÃO E DIÁLOGOS
+// ==========================================
+botaoPlay.addEventListener('click', () => {
+    // Se o jogo ainda não começou, mostra a primeira frase
+    if (!jogoIniciado && fraseAtual === 0 && !dialogosTerminados) {
+        jogoIniciado = true;
         caixaMensagem.style.display = 'block';
-        caixaMensagem.innerText = dialogos[fraseAtual];
-
-        gameBoard.classList.remove('escurecer');
-
-        
-        jogoIniciado = true; // Libera os cliques para passar de frase
-    }, 500);
-});
-
-
-   
-     
-// 2. Evento que detecta o clique na caixa de mensagem para avançar
-caixaMensagem.addEventListener('click', function() {
-    if (jogoIniciado) {
-        fraseAtual++; // Avança para a próxima frase (+1)
-
-        // Se ainda sobrarem frases na lista, mostra a próxima
-        if (fraseAtual < dialogos.length) {
-            caixaMensagem.innerText = dialogos[fraseAtual];
-        } else {
-            // Se as frases acabaram, esconde a caixa ou inicia a ação do jogo
-            caixaMensagem.innerText = "";
-            caixaMensagem.style.display = 'none';
-            console.log("Diálogo encerrado! O jogador já pode mover o personagem.");
-        }
+        caixaMensagem.textContent = dialogos[fraseAtual];
+        botaoPlay.textContent = "Avançar"; 
+        boneco.style.display = 'block'; // Mostra o boneco
+    } else {
+        // Se já começou, passa para a próxima frase
+        passarDialogo();
     }
 });
 
@@ -73,125 +54,116 @@ function passarDialogo() {
     if (fraseAtual < dialogos.length) {
         caixaMensagem.textContent = dialogos[fraseAtual];
     } else {
-        // --- AS FRASES TERMINARAM! COMEÇA O EFEITO ---
+        // DIÁLOGOS TERMINARAM: Inicia o efeito
+        dialogosTerminados = true;
+        jogoIniciado = false; // Trava o teclado temporariamente
         
-        caixaMensagem.style.display = 'none'; // Some com a caixa de texto
-        transicao.classList.add('ativo');    // Escurece a tela suavemente (Fade out)
+        caixaMensagem.style.display = 'none'; // Some o texto
+        botaoPlay.style.display = 'none';     // Some o botão play
+        
+        transicao.classList.add('ativo');     // Escurece a tela
 
-        // Espera 1.5 segundos (tempo do efeito de escurecer) para mudar as coisas por trás
+        // Espera 1.5 segundos (tempo do fade) para mudar o cenário por trás do preto
         setTimeout(() => {
-            boneco.style.display = 'none'; // Some com o personagem completamente
+            boneco.style.display = 'none';    // Sumiu o personagem
             
-            // Troca para o cenário onde precisa clicar no meio da tela
-            gameBoard.classList.remove('cenario1'); // Remova o cenário atual (1 ou 2)
-            gameBoard.classList.add('cenario_clique'); // Adiciona o cenário intermediário
+            gameBoard.classList.remove('cenario2');
+            gameBoard.classList.add('cenario_clique'); // Cenário novo de fundo
             
-            // Clareia a tela novamente (Fade in) para mostrar o novo cenário sem o boneco
-            transicao.classList.remove('ativo'); 
+            transicao.classList.remove('ativo'); // Clareia a tela de novo
             
-            // Ativa o evento para detectar o clique no meio da tela
-            ativarCliqueNoMeio();
+            ativarCliqueNoMeio(); // Libera o clique no meio
         }, 1500); 
     }
 }
 
 // ==========================================
-// CONTROLES DO TECLADO (A-W-S-D e Setas)
+// 4. SISTEMA DE CLIQUE NO MEIO DA TELA
 // ==========================================
-const teclas = { 
-    a: false, w: false, s: false, d: false, 
-    ArrowUp: false, ArrowDown: false, ArrowLeft: false, ArrowRight: false 
-};
+function activarCliqueNoMeio() {
+    gameBoard.addEventListener('click', function funcaoClique() {
+        // Escurece de novo ao clicar no meio da tela
+        transicao.classList.add('ativo');
 
-// Quando APERTA qualquer tecla de andar, muda para o GIF andando
+        setTimeout(() => {
+            gameBoard.classList.remove('cenario_clique');
+            gameBoard.classList.add('cenario3'); // Vai para o cenário 3 final
+            
+            // Se quiser que o boneco reapareça no cenário 3, descomente as duas linhas abaixo:
+            // boneco.style.display = 'block';
+            // jogoIniciado = true;
+
+            transicao.classList.remove('ativo'); // Mostra o novo cenário
+        }, 1500);
+
+        // Remove o evento para o clique só funcionar uma vez
+        gameBoard.removeEventListener('click', funcaoClique);
+    });
+}
+
+// ==========================================
+// 5. EVENTOS DO TECLADO DO BONECO
+// ==========================================
 window.addEventListener('keydown', (evento) => {
-    // Converte a tecla para minúscula (caso o CapsLock esteja ativo)
     const teclaPressionada = evento.key.toLowerCase();
-
     if (jogoIniciado && (teclaPressionada in teclas || evento.key in teclas)) {
         if (teclaPressionada in teclas) teclas[teclaPressionada] = true;
         if (evento.key in teclas) teclas[evento.key] = true;
-        
-        boneco.classList.add('movendo'); // Troca para o GIF andando (player1.gif)
+        boneco.classList.add('movendo');
     }
 });
 
-// Quando SOLTA a tecla, verifica se não há mais NENHUMA pressionada para voltar a ficar parado
 window.addEventListener('keyup', (evento) => {
     const teclaSolta = evento.key.toLowerCase();
-
     if (teclaSolta in teclas) teclas[teclaSolta] = false;
     if (evento.key in teclas) teclas[evento.key] = false;
     
-    // Verifica se TODAS as teclas estão falsas (ou seja, dedão fora do teclado)
     const nenhumaTeclaPressionada = !teclas.a && !teclas.w && !teclas.s && !teclas.d && 
                                     !teclas.ArrowLeft && !teclas.ArrowUp && !teclas.ArrowDown && !teclas.ArrowRight;
 
     if (nenhumaTeclaPressionada) {
-        boneco.classList.remove('movendo'); // Remove a animação e volta para o parado (Playerparado.png)
+        boneco.classList.remove('movendo');
     }
 });
 
-
 // ==========================================
-// LOOP DE MOVIMENTAÇÃO (4 DIREÇÕES)
+// 6. LOOP DE MOVIMENTAÇÃO (FRAME POR FRAME)
 // ==========================================
 function atualizarJogo() {
     if (jogoIniciado) {
-        // IR PARA A DIREITA (D ou Seta Direita)
         if (teclas.d || teclas.ArrowRight) {
-            posicaoX += velocidade;
-            boneco.style.transform = "scaleX(1)"; // Olha para a direita
+            posicaoX += velocidad;
+            boneco.style.transform = "scaleX(1)";
         }
-        // IR PARA A ESQUERDA (A ou Seta Esquerda)
         if (teclas.a || teclas.ArrowLeft) {
-            posicaoX -= velocidade;
-            boneco.style.transform = "scaleX(-1)"; // Olha para a esquerda
+            posicaoX -= velocidad;
+            boneco.style.transform = "scaleX(-1)";
         }
-        // IR PARA CIMA (W ou Seta Para Cima)
         if (teclas.w || teclas.ArrowUp) {
-            posicaoY += velocidade; // Sobe no cenário
+            posicaoY += velocidad;
         }
-        // IR PARA BAIXO (S ou Seta Para Baixo)
         if (teclas.s || teclas.ArrowDown) {
-            posicaoY -= velocidade; // Desce no cenário
+            posicaoY -= velocidad;
         }
-        
-        // Aplica os novos valores de posição no CSS do personagem
+
+        // Limites da tela para não sumir
+        const larguraCenario = gameBoard.clientWidth;
+        if (posicaoX < 0) posicaoX = 0;
+        if (posicaoY < 0) posicaoY = 0;
+
+        // Se encostar na borda direita no cenário 2, também muda cenário por andar (Opcional)
+        if (cenarioAtual === 2 && posicaoX >= (larguraCenario - 64)) {
+            gameBoard.classList.remove('cenario2');
+            gameBoard.classList.add('cenario3');
+            cenarioAtual = 3;
+            posicaoX = 10; 
+        }
+
         boneco.style.left = posicaoX + "px";
-        boneco.style.bottom = posicaoY + "px"; // Altera a altura dinamicamente
+        boneco.style.bottom = posicaoY + "px";
     }
-    
     requestAnimationFrame(atualizarJogo);
 }
 
-// Inicializa o sistema
+// Inicia o motor do jogo
 atualizarJogo();
-
-function ativarCliqueNoMeio() {
-    // Desativa temporariamente a movimentação do teclado (opcional)
-    jogoIniciado = false; 
-
-    // Cria o evento de clique na tela do jogo
-    gameBoard.addEventListener('click', function funcaoClique() {
-        
-        // Escurece a tela novamente para fazer a troca do cenário por clique
-        transicao.classList.add('ativo');
-
-        setTimeout(() => {
-            // Muda para o próximo cenário desejado (ex: Cenário 3 ou 4)
-            gameBoard.classList.remove('cenario_clique');
-            gameBoard.classList.add('cenario3'); 
-            
-            // Se o boneco tiver que voltar no próximo cenário, mude aqui:
-            // boneco.style.display = 'block';
-            // jogoIniciado = true;
-
-            // Clareia a tela no cenário novo
-            transicao.classList.remove('ativo');
-        }, 1500);
-
-        // Remove esse evento de clique para não ficar rodando toda vez que clicar na tela depois
-        gameBoard.removeEventListener('click', funcaoClique);
-    });
-}
