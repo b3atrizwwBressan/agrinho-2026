@@ -137,3 +137,65 @@ function atualizarJogo() {
 
 // Inicializa o sistema
 atualizarJogo();
+
+Que bom que recomeçar limpou os bugs antigos e deu certo! Fazer o código do zero com a mente fresca é a melhor tática no desenvolvimento de jogos.
+
+Agora, para fazer o personagem mudar do cenário 2 para o cenário 3 ao tocar na borda da tela, nós precisamos ler qual é o tamanho real da sua caixa de jogo (.game-board) e testar se o boneco chegou no limite.
+
+Substitua a sua função atualizarJogo() no seu script.js por esta versão inteligente. Ela já calcula o tamanho exato da borda do seu cenário automaticamente, sem você precisar adivinhar os pixels:
+
+JavaScript
+function atualizarJogo() {
+    if (jogoIniciado) {
+        // --- 1. CONTROLE DE MOVIMENTO (A-W-S-D e Setas) ---
+        if (teclas.d || teclas.ArrowRight) {
+            posicaoX += velocidade;
+            boneco.style.transform = "scaleX(1)"; // Olha para a direita
+        }
+        if (teclas.a || teclas.ArrowLeft) {
+            posicaoX -= velocidade;
+            boneco.style.transform = "scaleX(-1)"; // Olha para a esquerda
+        }
+        if (teclas.w || teclas.ArrowUp) {
+            posicaoY += velocidade; // Sobe
+        }
+        if (teclas.s || teclas.ArrowDown) {
+            posicaoY -= velocidade; // Desce
+        }
+
+        // --- 2. TRAVAR O BONECO DENTRO DA TELA (Cima, Baixo e Esquerda) ---
+        // Pega a largura e altura atuais da área do jogo
+        const larguraCenario = gameBoard.clientWidth;
+        const alturaCenario = gameBoard.clientHeight;
+
+        // Impede de sumir pela esquerda
+        if (posicaoX < 0) posicaoX = 0;
+        // Impede de sumir por baixo
+        if (posicaoY < 0) posicaoY = 0;
+        // Impede de sumir por cima (descontando o tamanho do boneco para não passar da borda)
+        if (posicaoY > alturaCenario - 64) posicaoY = alturaCenario - 64;
+
+
+        // --- 3. MUDANÇA DE CENÁRIO (Ao tocar na borda direita) ---
+        // Se a posição X do boneco passar do limite da largura da tela (descontando o tamanho dele):
+        if (cenarioAtual === 2 && posicaoX >= (larguraCenario - 64)) {
+            
+            // Troca as classes no CSS
+            gameBoard.classList.remove('cenario2');
+            gameBoard.classList.add('cenario3');
+            
+            // Avisa o JS que agora estamos no cenário 3
+            cenarioAtual = 3;
+            
+            // Teleporta o boneco de volta para o comecinho do lado esquerdo (posição 10px)
+            posicaoX = 10; 
+        }
+
+        // Aplica os valores atualizados na tela
+        boneco.style.left = posicaoX + "px";
+        boneco.style.bottom = posicaoY + "px";
+    }
+
+    // Mantém o loop ativo
+    requestAnimationFrame(atualizarJogo);
+}
