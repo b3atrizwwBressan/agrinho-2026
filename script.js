@@ -65,21 +65,25 @@ caixaMensagem.addEventListener('click', function() {
 });
 
 
+// ==========================================
+// CONTROLES DO TECLADO (A-W-S-D e Setas)
+// ==========================================
+
 const teclas = { 
     a: false, w: false, s: false, d: false, 
-    ArrowUp: false, ArrowDown: false, ArrowLeft: false, ArrowRight: false 
+    ArrowLeft: false, ArrowUp: false, ArrowDown: false, ArrowRight: false 
 };
 
 // Quando APERTA qualquer tecla de andar, muda para o GIF andando
 window.addEventListener('keydown', (evento) => {
-    // Converte a tecla para minúscula (caso o CapsLock esteja ativo)
     const teclaPressionada = evento.key.toLowerCase();
 
+    // Verifica se a tecla pressionada existe no nosso objeto de teclas
     if (jogoIniciado && (teclaPressionada in teclas || evento.key in teclas)) {
         if (teclaPressionada in teclas) teclas[teclaPressionada] = true;
         if (evento.key in teclas) teclas[evento.key] = true;
         
-        boneco.classList.add('movendo'); // Troca para o GIF andando (player1.gif)
+        boneco.classList.add('movendo'); // Troca para o GIF
     }
 });
 
@@ -90,18 +94,18 @@ window.addEventListener('keyup', (evento) => {
     if (teclaSolta in teclas) teclas[teclaSolta] = false;
     if (evento.key in teclas) teclas[evento.key] = false;
     
-    // Verifica se TODAS as teclas estão falsas (ou seja, dedão fora do teclado)
+    // Checa se o jogador soltou absolutamente tudo
     const nenhumaTeclaPressionada = !teclas.a && !teclas.w && !teclas.s && !teclas.d && 
                                     !teclas.ArrowLeft && !teclas.ArrowUp && !teclas.ArrowDown && !teclas.ArrowRight;
 
-    if (nenhumaTeclaPressionada) {
-        boneco.classList.remove('movendo'); // Remove a animação e volta para o parado (Playerparado.png)
+    if (nenhumTeclaPressionada) {
+        boneco.classList.remove('movendo'); // Volta para a imagem parada
     }
 });
 
 
 // ==========================================
-// LOOP DE MOVIMENTAÇÃO (4 DIREÇÕES)
+// LOOP DE MOVIMENTAÇÃO (4 DIREÇÕES + MUDANÇA DE CENÁRIO)
 // ==========================================
 function atualizarJogo() {
     if (jogoIniciado) {
@@ -117,69 +121,34 @@ function atualizarJogo() {
         }
         // IR PARA CIMA (W ou Seta Para Cima)
         if (teclas.w || teclas.ArrowUp) {
-            posicaoY += velocidade; // Sobe no cenário
+            posicaoY += velocidade; // Altera o Y
         }
         // IR PARA BAIXO (S ou Seta Para Baixo)
         if (teclas.s || teclas.ArrowDown) {
-            posicaoY -= velocidade; // Desce no cenário
+            posicaoY -= velocidade; // Altera o Y
         }
         
-        // Aplica os novos valores de posição no CSS do personagem
-        boneco.style.left = posicaoX + "px";
-        boneco.style.bottom = posicaoY + "px"; // Altera a altura dinamicamente
-    }
-    
-    requestAnimationFrame(atualizarJogo);
-}
-
-// Inicializa o sistema
-function atualizarJogo() {
-    if (jogoIniciado) {
-        // IR PARA A DIREITA (D ou Seta Direita)
-        if (teclas.d || teclas.ArrowRight) {
-            posicaoX += velocidade;
-            boneco.style.transform = "scaleX(1)";
-        }
-        // IR PARA A ESQUERDA (A ou Seta Esquerda)
-        if (teclas.a || teclas.ArrowLeft) {
-            posicaoX -= velocidade;
-            boneco.style.transform = "scaleX(-1)";
-        }
-        // IR PARA CIMA (W ou Seta Para Cima)
-        if (teclas.w || teclas.ArrowUp) {
-            posicaoY += velocidade;
-        }
-        // IR PARA BAIXO (S ou Seta Para Baixo)
-        if (teclas.s || teclas.ArrowDown) {
-            posicaoY -= velocidade;
-        }
-        
-        // ==========================================
-        // DETECÇÃO DE BORDA: MUDANÇA DE CENÁRIO
-        // ==========================================
-        
-        // Se o jogador estiver no Cenário 2 e passar da borda direita (X > 750)
+        // --- CHECAGEM DA BORDA PARA MUDAR DE CENÁRIO ---
         if (cenarioAtual === 2 && posicaoX > 750) {
-            // 1. Remove o fundo do cenário 2 e adiciona o do cenário 3
             gameBoard.classList.remove('cenario2');
             gameBoard.classList.add('cenario3');
-            
-            // 2. Atualiza a variável para o JS saber que mudou
             cenarioAtual = 3;
-            
-            // 3. Teleporta o boneco de volta para o início do lado esquerdo (para ele entrar no Cenário 3 andando)
-            posicaoX = 10; 
+            posicaoX = 10; // Coloca ela no comecinho do cenário 3
         }
 
-        // Bloqueia o boneco de sumir da tela pelo lado esquerdo (borda mínima)
+        // Impede ela de sumir pelo lado esquerdo da tela
         if (posicaoX < 0) {
             posicaoX = 0;
         }
 
-        // Aplica os valores de posição na tela
+        // CRUCIAL: Força o CSS a receber os números atualizados em cada quadro da animação
         boneco.style.left = posicaoX + "px";
         boneco.style.bottom = posicaoY + "px";
     }
     
+    // Mantém o loop rodando em segundo plano
     requestAnimationFrame(atualizarJogo);
 }
+
+// Inicializa o sistema de movimentação
+atualizarJogo();
