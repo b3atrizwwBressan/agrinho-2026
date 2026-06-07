@@ -97,7 +97,7 @@ background-image: url('cenario1.webp');
     background-repeat: no-repeat;
     background-size: contain;
     image-rendering: pixelated; 
-    background-position: 150px center;
+    
     display: none;        /* Começa escondido no menu */
 }
 
