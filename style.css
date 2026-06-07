@@ -85,8 +85,8 @@ background-image: url('cenario1.webp');
     
 
 #personagem {
-    width: 460px;          /* Ajuste para o tamanho do seu boneco */
-    height: 464px;         /* Ajuste para o tamanho do seu boneco */
+    width: 200px;          /* Ajuste para o tamanho do seu boneco */
+    height: 204px;         /* Ajuste para o tamanho do seu boneco */
     position: absolute;
     bottom: 1px;         
     left: 5px;    
@@ -104,8 +104,8 @@ background-image: url('cenario1.webp');
 /* Quando o JS adicionar essa classe, o GIF muda para o dele andando */
 #personagem.movendo {
     background-image: url('player1.gif');
-     width: 60px;          /* Ajuste para o tamanho do seu boneco */
-    height: 64px;
+     width: 200px;          /* Ajuste para o tamanho do seu boneco */
+    height: 204px;
     background-position: center center;
     background-size: contain;
     background-repeat: no-repeat;
