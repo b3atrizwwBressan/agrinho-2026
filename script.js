@@ -136,7 +136,7 @@ function atualizarJogo() {
 }
 
 // Inicializa o sistema
-atualizarJogo();
+
 
 Que bom que recomeçar limpou os bugs antigos e deu certo! Fazer o código do zero com a mente fresca é a melhor tática no desenvolvimento de jogos.
 
@@ -199,3 +199,6 @@ function atualizarJogo() {
     // Mantém o loop ativo
     requestAnimationFrame(atualizarJogo);
 }
+
+
+atualizarJogo();
