@@ -96,7 +96,7 @@ background-image: url('cenario1.webp');
     background-image: url('Playerparado.png'); 
     background-repeat: no-repeat;
     background-size: contain;
-    image-rendering: pixelated; 
+    
     
     display: none;        /* Começa escondido no menu */
 }
