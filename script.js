@@ -3,6 +3,9 @@ const musica = document.getElementById('musica-jogo');
 const gameBoard = document.querySelector('.game-board');
 const caixaMensagem = document.getElementById('caixa-mensagem');
 const boneco = document.getElementById('personagem');
+const transicao = document.getElementById('transicao-preta');
+
+
 let posicaoX = 50; 
 let posicaoY = 50; // ADICIONE ISSO: Posição inicial de altura do boneco
 const velocidade = 8;
@@ -64,6 +67,33 @@ caixaMensagem.addEventListener('click', function() {
     }
 });
 
+function passarDialogo() {
+    fraseAtual++;
+
+    if (fraseAtual < dialogos.length) {
+        caixaMensagem.textContent = dialogos[fraseAtual];
+    } else {
+        // --- AS FRASES TERMINARAM! COMEÇA O EFEITO ---
+        
+        caixaMensagem.style.display = 'none'; // Some com a caixa de texto
+        transicao.classList.add('ativo');    // Escurece a tela suavemente (Fade out)
+
+        // Espera 1.5 segundos (tempo do efeito de escurecer) para mudar as coisas por trás
+        setTimeout(() => {
+            boneco.style.display = 'none'; // Some com o personagem completamente
+            
+            // Troca para o cenário onde precisa clicar no meio da tela
+            gameBoard.classList.remove('cenario1'); // Remova o cenário atual (1 ou 2)
+            gameBoard.classList.add('cenario_clique'); // Adiciona o cenário intermediário
+            
+            // Clareia a tela novamente (Fade in) para mostrar o novo cenário sem o boneco
+            transicao.classList.remove('ativo'); 
+            
+            // Ativa o evento para detectar o clique no meio da tela
+            ativarCliqueNoMeio();
+        }, 1500); 
+    }
+}
 
 // ==========================================
 // CONTROLES DO TECLADO (A-W-S-D e Setas)
@@ -138,3 +168,30 @@ function atualizarJogo() {
 // Inicializa o sistema
 atualizarJogo();
 
+function ativarCliqueNoMeio() {
+    // Desativa temporariamente a movimentação do teclado (opcional)
+    jogoIniciado = false; 
+
+    // Cria o evento de clique na tela do jogo
+    gameBoard.addEventListener('click', function funcaoClique() {
+        
+        // Escurece a tela novamente para fazer a troca do cenário por clique
+        transicao.classList.add('ativo');
+
+        setTimeout(() => {
+            // Muda para o próximo cenário desejado (ex: Cenário 3 ou 4)
+            gameBoard.classList.remove('cenario_clique');
+            gameBoard.classList.add('cenario3'); 
+            
+            // Se o boneco tiver que voltar no próximo cenário, mude aqui:
+            // boneco.style.display = 'block';
+            // jogoIniciado = true;
+
+            // Clareia a tela no cenário novo
+            transicao.classList.remove('ativo');
+        }, 1500);
+
+        // Remove esse evento de clique para não ficar rodando toda vez que clicar na tela depois
+        gameBoard.removeEventListener('click', funcaoClique);
+    });
+}

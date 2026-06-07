@@ -117,3 +117,24 @@ background-image: url('cenario1.webp');
     background-repeat: no-repeat;
     background-size: cover;
 }
+
+
+/* Tela preta de transição */
+#transicao-preta {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: 0;
+    pointer-events: none; /* Impede de bloquear cliques enquanto estiver invisível */
+    transition: opacity 1.5s ease-in-out; /* Velocidade do efeito de escurecer */
+    z-index: 10; /* Fica por cima de tudo */
+}
+
+/* Quando ativar, ela escurece a tela */
+#transicao-preta.ativo {
+    opacity: 1;
+    pointer-events: auto; /* Permite clicar nela para avançar */
+}
