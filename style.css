@@ -138,3 +138,8 @@ background-image: url('cenario1.webp');
     opacity: 1;
     pointer-events: auto; /* Permite clicar nela para avançar */
 }
+
+.game-board.cenario_clique {
+    background-image: url('cenario 10.webp'); /* Nome da sua imagem */
+    background-size: cover;
+}
