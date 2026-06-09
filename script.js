@@ -5,10 +5,14 @@ const caixaMensagem = document.getElementById('caixa-mensagem');
 const boneco = document.getElementById('personagem');
 const transicao = document.getElementById('transicao-preta');
 
+// NOVOS ELEMENTOS DO QUIZ
+const caixaQuiz = document.getElementById('caixa-quiz');
+const perguntaQuiz = document.getElementById('pergunta-quiz');
+const opcoesQuiz = document.getElementById('opcoes-quiz');
 
 let posicaoX = 50; 
-let posicaoY = 50; // ADICIONE ISSO: Posição inicial de altura do boneco
-const velocidade = 8;
+let posicaoY = 50; 
+const velocidad = 8;
 
 // 1. Criamos a lista de frases que vão aparecer em sequência
 const dialogos = [
@@ -19,8 +23,17 @@ const dialogos = [
     "Para andar, basta somente clicar A-S-D-W"
 ];
 
-let fraseAtual = 0; // Começa na primeira frase (posição 0)
-let jogoIniciado = false; // Garante que os cliques só funcionam após o Play
+// ESTRUTURA DO SEU QUIZ
+const perguntasQuiz = [
+    {
+        pergunta: "Qual dessas teclas faz o personagem andar para a esquerda?",
+        alternativas: ["W", "A", "S", "D"],
+        correta: 1 
+    }
+];
+
+let fraseAtual = 0; 
+let jogoIniciado = false; 
 
 botaoPlay.addEventListener('click', function() {
     musica.play();
@@ -33,63 +46,81 @@ botaoPlay.addEventListener('click', function() {
         boneco.style.display = "block";
         botaoPlay.style.display = 'none'; 
         
-
-        
-
         // Mostra a primeira frase da lista
         caixaMensagem.style.display = 'block';
         caixaMensagem.innerText = dialogos[fraseAtual];
 
         gameBoard.classList.remove('escurecer');
 
-        
-        jogoIniciado = true; // Libera os cliques para passar de frase
+        jogoIniciado = true; 
     }, 500);
 });
 
-
-   
-     
 // 2. Evento que detecta o clique na caixa de mensagem para avançar
 caixaMensagem.addEventListener('click', function() {
     if (jogoIniciado) {
-        fraseAtual++; // Avança para a próxima frase (+1)
+        fraseAtual++; 
 
         // Se ainda sobrarem frases na lista, mostra a próxima
         if (fraseAtual < dialogos.length) {
             caixaMensagem.innerText = dialogos[fraseAtual];
         } else {
-            // Se as frases acabaram, esconde a caixa ou inicia a ação do jogo
+            // ========================================================
+            // AS FRASES ACABARAM -> ABRE O QUIZ E MANTÉM O MOVIMENTO!
+            // ========================================================
             caixaMensagem.innerText = "";
             caixaMensagem.style.display = 'none';
-            console.log("Diálogo encerrado! O jogador já pode mover o personagem.");
+            
+            // MODIFICAÇÃO AQUI: Deixamos jogoIniciado como true para o teclado continuar ativo!
+            jogoIniciado = true; 
+            
+            // Abre o painel do quiz transparente na tela
+            caixaQuiz.classList.remove('escondido');
+            carregarPerguntaQuiz(0); 
+            
+            console.log("Diálogo encerrado! Quiz aberto e personagem livre para andar.");
         }
     }
 });
 
+// Função que gerencia a montagem da pergunta e alternativas do Quiz
+function carregarPerguntaQuiz(indice) {
+    const dados = perguntasQuiz[indice];
+    perguntaQuiz.textContent = dados.pergunta;
+    opcoesQuiz.innerHTML = ""; 
+
+    dados.alternativas.forEach((alternativa, i) => {
+        const botao = document.createElement('button');
+        botao.classList.add('btn-resposta');
+        botao.textContent = alternativa;
+        
+        botao.addEventListener('click', () => {
+            if (i === dados.correta) {
+                alert("Acertou! Muito bem.");
+                caixaQuiz.classList.add('escondido'); // Fecha o quiz ao acertar
+                // O jogador continua andando normalmente sem interrupção
+            } else {
+                alert("Resposta incorreta! Tente novamente.");
+            }
+        });
+        
+        opcoesQuiz.appendChild(botao);
+    });
+}
+
+// Mantido por segurança (intocado)
 function passarDialogo() {
     fraseAtual++;
-
     if (fraseAtual < dialogos.length) {
         caixaMensagem.textContent = dialogos[fraseAtual];
     } else {
-        // --- AS FRASES TERMINARAM! COMEÇA O EFEITO ---
-        
-        caixaMensagem.style.display = 'none'; // Some com a caixa de texto
-        transicao.classList.add('ativo');    // Escurece a tela suavemente (Fade out)
-
-        // Espera 1.5 segundos (tempo do efeito de escurecer) para mudar as coisas por trás
+        caixaMensagem.style.display = 'none'; 
+        transicao.classList.add('ativo'); 
         setTimeout(() => {
-            boneco.style.display = 'none'; // Some com o personagem completamente
-            
-            // Troca para o cenário onde precisa clicar no meio da tela
-            gameBoard.classList.remove('cenario1'); // Remova o cenário atual (1 ou 2)
-            gameBoard.classList.add('cenario_clique'); // Adiciona o cenário intermediário
-            
-            // Clareia a tela novamente (Fade in) para mostrar o novo cenário sem o boneco
+            boneco.style.display = 'none'; 
+            gameBoard.classList.remove('cenario1'); 
+            gameBoard.classList.add('cenario_clique'); 
             transicao.classList.remove('ativo'); 
-            
-            // Ativa o evento para detectar o clique no meio da tela
             ativarCliqueNoMeio();
         }, 1500); 
     }
@@ -103,95 +134,65 @@ const teclas = {
     ArrowUp: false, ArrowDown: false, ArrowLeft: false, ArrowRight: false 
 };
 
-// Quando APERTA qualquer tecla de andar, muda para o GIF andando
 window.addEventListener('keydown', (evento) => {
-    // Converte a tecla para minúscula (caso o CapsLock esteja ativo)
     const teclaPressionada = evento.key.toLowerCase();
-
     if (jogoIniciado && (teclaPressionada in teclas || evento.key in teclas)) {
         if (teclaPressionada in teclas) teclas[teclaPressionada] = true;
         if (evento.key in teclas) teclas[evento.key] = true;
-        
-        boneco.classList.add('movendo'); // Troca para o GIF andando (player1.gif)
+        boneco.classList.add('movendo'); 
     }
 });
 
-// Quando SOLTA a tecla, verifica se não há mais NENHUMA pressionada para voltar a ficar parado
 window.addEventListener('keyup', (evento) => {
     const teclaSolta = evento.key.toLowerCase();
-
     if (teclaSolta in teclas) teclas[teclaSolta] = false;
     if (evento.key in teclas) teclas[evento.key] = false;
     
-    // Verifica se TODAS as teclas estão falsas (ou seja, dedão fora do teclado)
     const nenhumaTeclaPressionada = !teclas.a && !teclas.w && !teclas.s && !teclas.d && 
                                     !teclas.ArrowLeft && !teclas.ArrowUp && !teclas.ArrowDown && !teclas.ArrowRight;
 
     if (nenhumaTeclaPressionada) {
-        boneco.classList.remove('movendo'); // Remove a animação e volta para o parado (Playerparado.png)
+        boneco.classList.remove('movendo'); 
     }
 });
-
 
 // ==========================================
 // LOOP DE MOVIMENTAÇÃO (4 DIREÇÕES)
 // ==========================================
 function atualizarJogo() {
     if (jogoIniciado) {
-        // IR PARA A DIREITA (D ou Seta Direita)
         if (teclas.d || teclas.ArrowRight) {
-            posicaoX += velocidade;
-            boneco.style.transform = "scaleX(1)"; // Olha para a direita
+            posicaoX += velocidad;
+            boneco.style.transform = "scaleX(1)"; 
         }
-        // IR PARA A ESQUERDA (A ou Seta Esquerda)
         if (teclas.a || teclas.ArrowLeft) {
-            posicaoX -= velocidade;
-            boneco.style.transform = "scaleX(-1)"; // Olha para a esquerda
+            posicaoX -= velocidad;
+            boneco.style.transform = "scaleX(-1)"; 
         }
-        // IR PARA CIMA (W ou Seta Para Cima)
         if (teclas.w || teclas.ArrowUp) {
-            posicaoY += velocidade; // Sobe no cenário
+            posicaoY += velocidad; 
         }
-        // IR PARA BAIXO (S ou Seta Para Baixo)
         if (teclas.s || teclas.ArrowDown) {
-            posicaoY -= velocidade; // Desce no cenário
+            posicaoY -= velocidad; 
         }
         
-        // Aplica os novos valores de posição no CSS do personagem
         boneco.style.left = posicaoX + "px";
-        boneco.style.bottom = posicaoY + "px"; // Altera a altura dinamicamente
+        boneco.style.bottom = posicaoY + "px"; 
     }
-    
     requestAnimationFrame(atualizarJogo);
 }
 
-// Inicializa o sistema
 atualizarJogo();
 
-function ativarCliqueNoMeio() {
-    // Desativa temporariamente a movimentação do teclado (opcional)
+function activarCliqueNoMeio() {
     jogoIniciado = false; 
-
-    // Cria o evento de clique na tela do jogo
     gameBoard.addEventListener('click', function funcaoClique() {
-        
-        // Escurece a tela novamente para fazer a troca do cenário por clique
         transicao.classList.add('ativo');
-
         setTimeout(() => {
-            // Muda para o próximo cenário desejado (ex: Cenário 3 ou 4)
             gameBoard.classList.remove('cenario_clique');
             gameBoard.classList.add('cenario3'); 
-            
-            // Se o boneco tiver que voltar no próximo cenário, mude aqui:
-            // boneco.style.display = 'block';
-            // jogoIniciado = true;
-
-            // Clareia a tela no cenário novo
             transicao.classList.remove('ativo');
         }, 1500);
-
-        // Remove esse evento de clique para não ficar rodando toda vez que clicar na tela depois
         gameBoard.removeEventListener('click', funcaoClique);
     });
 }

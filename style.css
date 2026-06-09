@@ -143,3 +143,58 @@ background-image: url('cenario1.webp');
     background-image: url('cenario 10.webp'); /* Nome da sua imagem */
     background-size: cover;
 }
+
+/* Caixa do Quiz */
+#caixa-quiz {
+    position: absolute;
+    top: 10%;
+    right: 5%;
+    width: 45%; /* Ocupa quase metade da tela (ajuste como quiser) */
+    height: 80%;
+    background-color: rgba(0, 0, 0, 0.75); /* Preto semi-transparente */
+    border: 3px solid #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-family: Arial, sans-serif;
+    z-index: 20; /* Fica por cima do cenário */
+}
+
+#caixa-quiz h2 {
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 20px;
+}
+
+/* Botões das alternativas */
+#opcoes-quiz {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.btn-resposta {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 2px solid white;
+    padding: 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.2s;
+}
+
+.btn-resposta:hover {
+    background-color: rgba(255, 255, 255, 0.5); /* Destaca ao passar o mouse */
+}
+
+/* Classe para sumir/aparecer */
+.escondido {
+    display: none !important;
+}
