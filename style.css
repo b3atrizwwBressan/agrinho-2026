@@ -220,11 +220,11 @@ background-image: url('cenario1.webp');
 
 /* Estilo do Topo Fixo */
 .topo-resultado {
-    background-color: #d383d0; /* Verde Agro */
+    background-color: #ffc6fd; /* Verde Agro */
     color: white;
     padding: 15px;
     text-align: center;
-    border-bottom: 4px solid #937eea;
+    border-bottom: 4px solid #ff8ae4;
 }
 .topo-resultado h2 { margin: 0; font-size: 18px; }
 .pontos-finais { font-size: 22px; font-weight: bold; margin-top: 5px; }
