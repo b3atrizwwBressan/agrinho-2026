@@ -16,22 +16,41 @@ const velocidad = 8;
 
 // 1. Criamos a lista de frases que vão aparecer em sequência
 const dialogos = [
-    "Bem-vindo à Renascimento Rural! O jogo começou.",
-    "Uma certa pessoa precisa de sua ajuda...",
-    "Procure por ele em sua casa, ele irá te explicar tudo que precisa saber!",
-    "Boa sorte na sua jornada!",
-    "Para andar, basta somente clicar A-S-D-W"
+    "Bem-vindo à Renascimento Rural!",
+    "Faça um quiz educativo",
+    "Aprenda o quanto você sabe sobre agroforte e futuro sustentável!",
+    "Boa sorte em seu teste!",
+    "Haverá um total de 5 questões!"
 ];
 
-// ESTRUTURA DO SEU QUIZ
+// ========================================================
+// REESTRUTURADO: PERGUNTAS DO QUIZ E VARIÁVEIS DE PLACAR
+// ========================================================
 const perguntasQuiz = [
     {
-        pergunta: "Qual dessas teclas faz o personagem andar para a esquerda?",
-        alternativas: ["W", "A", "S", "D"],
+        pergunta: "Qual das seguintes práticas ajuda a preservar o solo e a água, sendo um pilar do agronegócio sustentável?",
+        alternativas: ["Rotações de culturas.", "Desmatamento total da propriedade.", "Queimada anual da palhada.", "Uso excessivo e sem controle da água."],
         correta: 1 
+    },
+    {
+        pergunta: "Como a tecnologia digital (como drones e sensores) contribui para o 'Agro Forte' e sustentável?",
+        alternativas: ["A) Substituindo completamente a necessidade de cuidar do solo", "B) Permitindo a aplicação exata de insumos apenas onde é necessário", "C) Aumentando o consumo de energia e combustíveis fósseis sem critérios", "D) Forçando o agricultor a abandonar as sementes tradicionais"],
+        correta: 2
+    },
+    {
+        pergunta: "O que significa o conceito de Integração Lavoura-Pecuária-Floresta (ILPF)?",
+        alternativas: ["A) Uma estratégia que produz grãos, carne e madeira na mesma área", "B) A separação rígida de fazendas para que nenhuma se misture", "C) A proibição do cultivo de árvores perto de criações de animais", "D) A substituição total de pastagens por desertos artificiais"],
+        correta: 1
+    },
+    {
+        pergunta: "Qual é a principal vantagem do Sistema de Plantio Direto para a conservação ambiental?",
+        alternativas: ["A) Deixar a terra totalmente exposta ao sol e à chuva", "B) Evitar o revolvimento do solo e manter os restos vegetais na superfície", "C) Exigir a aração profunda do terreno a cada novo ciclo", "D) Acelerar a evaporação da água do solo"],
+        correta: 2
     }
 ];
 
+let perguntaAtual = 0; // Controla qual pergunta está aparecendo
+let acertos = 0;       // Controla quantas perguntas o jogador acertou
 let fraseAtual = 0; 
 let jogoIniciado = false; 
 
@@ -65,28 +84,36 @@ caixaMensagem.addEventListener('click', function() {
         if (fraseAtual < dialogos.length) {
             caixaMensagem.innerText = dialogos[fraseAtual];
         } else {
-            // ========================================================
             // AS FRASES ACABARAM -> ABRE O QUIZ E MANTÉM O MOVIMENTO!
-            // ========================================================
             caixaMensagem.innerText = "";
             caixaMensagem.style.display = 'none';
             
-            // MODIFICAÇÃO AQUI: Deixamos jogoIniciado como true para o teclado continuar ativo!
             jogoIniciado = true; 
             
             // Abre o painel do quiz transparente na tela
             caixaQuiz.classList.remove('escondido');
-            carregarPerguntaQuiz(0); 
+            
+            // Reseta o placar caso o jogador esteja rejogando
+            perguntaAtual = 0;
+            acertos = 0;
+            
+            carregarPerguntaQuiz(perguntaAtual); 
             
             console.log("Diálogo encerrado! Quiz aberto e personagem livre para andar.");
         }
     }
 });
 
-// Função que gerencia a montagem da pergunta e alternativas do Quiz
+// ========================================================
+// MODIFICADO: FUNÇÃO DO QUIZ ATUALIZA O PLACAR DINAMICAMENTE
+// ========================================================
 function carregarPerguntaQuiz(indice) {
     const dados = perguntasQuiz[indice];
-    perguntaQuiz.textContent = dados.pergunta;
+    const totalPerguntas = perguntasQuiz.length;
+    
+    // Mostra a pergunta junto com o placar atualizado ex: (Acertou 1/4)
+    perguntaQuiz.innerHTML = `${dados.pergunta} <br><small style="color: #aaa; font-size: 14px;">Acertou: ${acertos}/${totalPerguntas}</small>`;
+    
     opcoesQuiz.innerHTML = ""; 
 
     dados.alternativas.forEach((alternativa, i) => {
@@ -95,12 +122,24 @@ function carregarPerguntaQuiz(indice) {
         botao.textContent = alternativa;
         
         botao.addEventListener('click', () => {
+            // Se acertar, adiciona +1 no contador de acertos
             if (i === dados.correta) {
                 alert("Acertou! Muito bem.");
-                caixaQuiz.classList.add('escondido'); // Fecha o quiz ao acertar
-                // O jogador continua andando normalmente sem interrupção
+                acertos++;
             } else {
-                alert("Resposta incorreta! Tente novamente.");
+                alert("Resposta incorreta!");
+            }
+            
+            // Avança para a próxima pergunta da lista
+            perguntaAtual++;
+            
+            // Se ainda tiver perguntas na lista, carrega a próxima
+            if (perguntaAtual < totalPerguntas) {
+                carregarPerguntaQuiz(perguntaAtual);
+            } else {
+                // Se responder todas as perguntas, mostra o resultado final e fecha o quiz
+                alert(`Quiz concluído! Seu resultado final foi: ${acertos}/${totalPerguntas}`);
+                caixaQuiz.classList.add('escondido');
             }
         });
         
