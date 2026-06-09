@@ -220,17 +220,18 @@ background-image: url('cenario1.webp');
 
 /* Estilo do Topo Fixo */
 .topo-resultado {
-    background-color: #2e7d32; /* Verde Agro */
+    background-color: #d383d0; /* Verde Agro */
     color: white;
     padding: 15px;
     text-align: center;
-    border-bottom: 4px solid #1b5e20;
+    border-bottom: 4px solid #937eea;
 }
 .topo-resultado h2 { margin: 0; font-size: 18px; }
 .pontos-finais { font-size: 22px; font-weight: bold; margin-top: 5px; }
 
 /* Estilo da área rolável do Site */
 .conteudo-site-rolavel {
+    font-family: font-family: "Pixelify Sans", sans-serif;
     padding: 20px;
     overflow-y: auto; /* ATIVA A ROLAGEM AQUI! */
     flex: 1; /* Faz essa parte ocupar todo o espaço restante */
