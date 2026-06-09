@@ -198,3 +198,43 @@ background-image: url('cenario1.webp');
 .escondido {
     display: none !important;
 }
+
+
+/* Container principal do resultado e site */
+#painel-resultado-site {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 500px;
+    height: 80%; /* Define limite de altura para forçar a rolagem interna */
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    z-index: 100;
+    display: flex;
+    flex-direction: column; /* Força o topo a ficar em cima e o site embaixo */
+    overflow: hidden;
+}
+
+/* Estilo do Topo Fixo */
+.topo-resultado {
+    background-color: #2e7d32; /* Verde Agro */
+    color: white;
+    padding: 15px;
+    text-align: center;
+    border-bottom: 4px solid #1b5e20;
+}
+.topo-resultado h2 { margin: 0; font-size: 18px; }
+.pontos-finais { font-size: 22px; font-weight: bold; margin-top: 5px; }
+
+/* Estilo da área rolável do Site */
+.conteudo-site-rolavel {
+    padding: 20px;
+    overflow-y: auto; /* ATIVA A ROLAGEM AQUI! */
+    flex: 1; /* Faz essa parte ocupar todo o espaço restante */
+    background-color: #ffffff;
+    text-align: left;
+    font-family: sans-serif;
+}

@@ -30,22 +30,22 @@ const perguntasQuiz = [
     {
         pergunta: "Qual das seguintes práticas ajuda a preservar o solo e a água, sendo um pilar do agronegócio sustentável?",
         alternativas: ["Rotações de culturas.", "Desmatamento total da propriedade.", "Queimada anual da palhada.", "Uso excessivo e sem controle da água."],
-        correta: 1 
+        correta: 0
     },
     {
         pergunta: "Como a tecnologia digital (como drones e sensores) contribui para o 'Agro Forte' e sustentável?",
         alternativas: ["A) Substituindo completamente a necessidade de cuidar do solo", "B) Permitindo a aplicação exata de insumos apenas onde é necessário", "C) Aumentando o consumo de energia e combustíveis fósseis sem critérios", "D) Forçando o agricultor a abandonar as sementes tradicionais"],
-        correta: 2
+        correta: 1
     },
     {
         pergunta: "O que significa o conceito de Integração Lavoura-Pecuária-Floresta (ILPF)?",
         alternativas: ["A) Uma estratégia que produz grãos, carne e madeira na mesma área", "B) A separação rígida de fazendas para que nenhuma se misture", "C) A proibição do cultivo de árvores perto de criações de animais", "D) A substituição total de pastagens por desertos artificiais"],
-        correta: 1
+        correta: 0
     },
     {
         pergunta: "Qual é a principal vantagem do Sistema de Plantio Direto para a conservação ambiental?",
         alternativas: ["A) Deixar a terra totalmente exposta ao sol e à chuva", "B) Evitar o revolvimento do solo e manter os restos vegetais na superfície", "C) Exigir a aração profunda do terreno a cada novo ciclo", "D) Acelerar a evaporação da água do solo"],
-        correta: 2
+        correta: 1
     }
 ];
 
@@ -111,7 +111,7 @@ function carregarPerguntaQuiz(indice) {
     const dados = perguntasQuiz[indice];
     const totalPerguntas = perguntasQuiz.length;
     
-    // Mostra a pergunta junto com o placar atualizado ex: (Acertou 1/4)
+    // Mostra a pergunta junto com o placar atualizado
     perguntaQuiz.innerHTML = `${dados.pergunta} <br><small style="color: #aaa; font-size: 14px;">Acertou: ${acertos}/${totalPerguntas}</small>`;
     
     opcoesQuiz.innerHTML = ""; 
@@ -122,7 +122,6 @@ function carregarPerguntaQuiz(indice) {
         botao.textContent = alternativa;
         
         botao.addEventListener('click', () => {
-            // Se acertar, adiciona +1 no contador de acertos
             if (i === dados.correta) {
                 alert("Acertou! Muito bem.");
                 acertos++;
@@ -130,16 +129,23 @@ function carregarPerguntaQuiz(indice) {
                 alert("Resposta incorreta!");
             }
             
-            // Avança para a próxima pergunta da lista
             perguntaAtual++;
             
-            // Se ainda tiver perguntas na lista, carrega a próxima
             if (perguntaAtual < totalPerguntas) {
                 carregarPerguntaQuiz(perguntaAtual);
             } else {
-                // Se responder todas as perguntas, mostra o resultado final e fecha o quiz
-                alert(`Quiz concluído! Seu resultado final foi: ${acertos}/${totalPerguntas}`);
+                // === AQUI ACONTECE A MUDANÇA ===
+                // 1. Esconde a caixa de perguntas do quiz
                 caixaQuiz.classList.add('escondido');
+                caixaQuiz.style.display = 'none'; // Garante que sumiu
+                
+                // 2. Atualiza o texto do resultado na nova seção
+                document.getElementById('texto-resultado-final').innerText = `Sua Pontuação: ${acertos} / ${totalPerguntas} Acertos`;
+                
+                // 3. Faz o painel do resultado e do site aparecer na tela
+                const painelFinal = document.getElementById('painel-resultado-site');
+                painelFinal.classList.remove('escondido');
+                painelFinal.style.display = 'flex';
             }
         });
         
