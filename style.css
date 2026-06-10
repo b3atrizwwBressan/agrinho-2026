@@ -113,7 +113,7 @@ html, body {
     pointer-events: none; 
     transition: opacity 1.5s ease-in-out; 
     z-index: 10; 
-} /* <--- CORRIGIDO: Chave adicionada aqui */
+} 
 
 #transicao-preta.ativo {
     opacity: 1;
@@ -130,7 +130,7 @@ html, body {
     position: absolute;
     top: 10%;
     right: 5%;
-    width: 45%; /* CORRIGIDO: Comentário fechado corretamente */
+    width: 45%; 
     height: 80%;
     background-color: rgba(0, 0, 0, 0.75); 
     border: 3px solid #fff;
@@ -144,7 +144,7 @@ html, body {
     color: white;
     font-family: Arial, sans-serif;
     z-index: 20; 
-} /* <--- CORRIGIDO: Chave adicionada aqui */
+} 
 
 #caixa-quiz h2 {
     margin-bottom: 20px;
