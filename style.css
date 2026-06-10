@@ -47,7 +47,7 @@ background-image: url('cenario1.webp');
 }
 
 .game-board.cenario2 {
-    background-image: url('cenario2.webp'); /* Coloque o nome da sua segunda imagem aqui */
+    background-image: url('cenario2.webp'); 
     position: relative;
 }
 
@@ -61,7 +61,7 @@ background-image: url('cenario1.webp');
     cursor: pointer;
     user-select: none;
 
-    /* NOVO POSICIONAMENTO: Canto superior esquerdo */
+   
     position: absolute;
     top: 13px;       /* Distância do topo da tela */
     left: 15px;      /* Distância da borda esquerda */
@@ -72,21 +72,21 @@ background-image: url('cenario1.webp');
     padding: 15px 25px;                   /* Espaço interno para respirar (cima/baixo e lados) */
     border-radius: 8px;                   /* Deixa as bordas levemente arredondadas (opcional) */
     
-    /* EXTRA: Uma borda fina cinza para parecer uma janela de jogo antiga */
+   
     border: 2px solid #555; 
 }
 
 
 .LOGOsite {
-    width: 200px;        /* Ou o tamanho que você quiser */
-    height: auto;        /* ISSO IMPEDE A IMAGEM DE FICAR TORTA/ESTRETCHADA */
-    object-fit: contain; /* Garante que ela mantenha a proporção original */
+    width: 200px;        
+    height: auto;        
+    object-fit: contain; 
 }
     
 
 #personagem {
-    width: 200px;          /* Ajuste para o tamanho do seu boneco */
-    height: 204px;         /* Ajuste para o tamanho do seu boneco */
+    width: 200px;          
+    height: 204px;         
     position: absolute;
     bottom: 1px;         
     left: 5px;    
@@ -101,10 +101,10 @@ background-image: url('cenario1.webp');
     display: none;        /* Começa escondido no menu */
 }
 
-/* Quando o JS adicionar essa classe, o GIF muda para o dele andando */
+
 #personagem.movendo {
     background-image: url('player1.gif');
-     width: 200px;          /* Ajuste para o tamanho do seu boneco */
+     width: 200px;         
     height: 204px;
     background-position: center center;
     background-size: contain;
@@ -113,7 +113,7 @@ background-image: url('cenario1.webp');
 
 
 .game-board.cenario3 {
-    background-image: url('cenario 3.png'); /* Substitua pelo nome do seu arquivo */
+    background-image: url('cenario 3.png'); 
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -128,12 +128,11 @@ background-image: url('cenario1.webp');
     height: 100%;
     background-color: black;
     opacity: 0;
-    pointer-events: none; /* Impede de bloquear cliques enquanto estiver invisível */
+    pointer-events: none; 
     transition: opacity 1.5s ease-in-out; /* Velocidade do efeito de escurecer */
-    z-index: 10; /* Fica por cima de tudo */
-}
+    z-index: 10; 
 
-/* Quando ativar, ela escurece a tela */
+
 #transicao-preta.ativo {
     opacity: 1;
     pointer-events: auto; /* Permite clicar nela para avançar */
@@ -149,7 +148,7 @@ background-image: url('cenario1.webp');
     position: absolute;
     top: 10%;
     right: 5%;
-    width: 45%; /* Ocupa quase metade da tela (ajuste como quiser) */
+    width: 45%; /* Ocupa quase metade da tela
     height: 80%;
     background-color: rgba(0, 0, 0, 0.75); /* Preto semi-transparente */
     border: 3px solid #fff;
@@ -233,8 +232,8 @@ background-image: url('cenario1.webp');
 .conteudo-site-rolavel {
     font-family: font-family: "Pixelify Sans", sans-serif;
     padding: 20px;
-    overflow-y: auto; /* ATIVA A ROLAGEM AQUI! */
-    flex: 1; /* Faz essa parte ocupar todo o espaço restante */
+    overflow-y: auto; 
+    flex: 1; 
     background-color: #ffffff;
     text-align: left;
     font-family: sans-serif;
