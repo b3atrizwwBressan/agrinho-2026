@@ -5,29 +5,26 @@ html, body {
 }
 
 .game-board {
-width: 100vw;
-height: 100vh;
-border: 1px solid #333;
-margin: 0 auto;
-position: relative;
-overflow: hidden;
-background-image: url('cenario1.webp');
+    width: 100vw;
+    height: 100vh;
+    border: 1px solid #333;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+    background-image: url('cenario1.webp');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 }
 
 .botao {
-     position: fixed; 
+    position: fixed; 
     left: 5px;
     bottom: 10px;
     width: 40vw;
     max-width: 600px;
     min-width: 300px;
 }
-
-
-
 
 .game-board::after {
     content: '';
@@ -51,7 +48,6 @@ background-image: url('cenario1.webp');
     position: relative;
 }
 
-
 #caixa-mensagem {
     font-family: "Pixelify Sans", sans-serif;
     font-size: 28px;
@@ -60,8 +56,6 @@ background-image: url('cenario1.webp');
     display: none; /* Começa escondida */
     cursor: pointer;
     user-select: none;
-
-   
     position: absolute;
     top: 13px;       /* Distância do topo da tela */
     left: 15px;      /* Distância da borda esquerda */
@@ -69,20 +63,16 @@ background-image: url('cenario1.webp');
 
     /* A CAIXA ESCURA */
     background-color: rgba(0, 0, 0, 0.6); /* Preto com 60% de opacidade */
-    padding: 15px 25px;                   /* Espaço interno para respirar (cima/baixo e lados) */
-    border-radius: 8px;                   /* Deixa as bordas levemente arredondadas (opcional) */
-    
-   
+    padding: 15px 25px;                   /* Espaço interno para respirar */
+    border-radius: 8px;                   /* Deixa as bordas levemente arredondadas */
     border: 2px solid #555; 
 }
-
 
 .LOGOsite {
     width: 200px;        
     height: auto;        
     object-fit: contain; 
 }
-    
 
 #personagem {
     width: 200px;          
@@ -90,34 +80,26 @@ background-image: url('cenario1.webp');
     position: absolute;
     bottom: 1px;         
     left: 5px;    
-          
-    
-    /* IMAGEM PADRÃO: Personagem parado (pode ser um GIF estático ou PNG) */
     background-image: url('Playerparado.png'); 
     background-repeat: no-repeat;
     background-size: contain;
-    
-    
     display: none;        /* Começa escondido no menu */
 }
 
-
 #personagem.movendo {
     background-image: url('player1.gif');
-     width: 200px;         
+    width: 200px;         
     height: 204px;
     background-position: center center;
     background-size: contain;
     background-repeat: no-repeat;
 }
 
-
 .game-board.cenario3 {
     background-image: url('cenario 3.png'); 
     background-repeat: no-repeat;
     background-size: cover;
 }
-
 
 /* Tela preta de transição */
 #transicao-preta {
@@ -129,17 +111,17 @@ background-image: url('cenario1.webp');
     background-color: black;
     opacity: 0;
     pointer-events: none; 
-    transition: opacity 1.5s ease-in-out; /* Velocidade do efeito de escurecer */
+    transition: opacity 1.5s ease-in-out; 
     z-index: 10; 
-
+} /* <--- CORRIGIDO: Chave adicionada aqui */
 
 #transicao-preta.ativo {
     opacity: 1;
-    pointer-events: auto; /* Permite clicar nela para avançar */
+    pointer-events: auto; 
 }
 
 .game-board.cenario_clique {
-    background-image: url('cenario 10.webp'); /* Nome da sua imagem */
+    background-image: url('cenario 10.webp'); 
     background-size: cover;
 }
 
@@ -148,9 +130,9 @@ background-image: url('cenario1.webp');
     position: absolute;
     top: 10%;
     right: 5%;
-    width: 45%; /* Ocupa quase metade da tela
+    width: 45%; /* CORRIGIDO: Comentário fechado corretamente */
     height: 80%;
-    background-color: rgba(0, 0, 0, 0.75); /* Preto semi-transparente */
+    background-color: rgba(0, 0, 0, 0.75); 
     border: 3px solid #fff;
     border-radius: 10px;
     padding: 20px;
@@ -161,8 +143,8 @@ background-image: url('cenario1.webp');
     align-items: center;
     color: white;
     font-family: Arial, sans-serif;
-    z-index: 20; /* Fica por cima do cenário */
-}
+    z-index: 20; 
+} /* <--- CORRIGIDO: Chave adicionada aqui */
 
 #caixa-quiz h2 {
     margin-bottom: 20px;
@@ -190,14 +172,13 @@ background-image: url('cenario1.webp');
 }
 
 .btn-resposta:hover {
-    background-color: rgba(255, 255, 255, 0.5); /* Destaca ao passar o mouse */
+    background-color: rgba(255, 255, 255, 0.5); 
 }
 
 /* Classe para sumir/aparecer */
 .escondido {
     display: none !important;
 }
-
 
 /* Container principal do resultado e site */
 #painel-resultado-site {
@@ -207,34 +188,43 @@ background-image: url('cenario1.webp');
     transform: translate(-50%, -50%);
     width: 90%;
     max-width: 500px;
-    height: 80%; /* Define limite de altura para forçar a rolagem interna */
+    height: 80%; 
     background-color: white;
     border-radius: 12px;
     box-shadow: 0 8px 24px rgba(0,0,0,0.3);
     z-index: 100;
     display: flex;
-    flex-direction: column; /* Força o topo a ficar em cima e o site embaixo */
+    flex-direction: column; 
     overflow: hidden;
 }
 
 /* Estilo do Topo Fixo */
 .topo-resultado {
-    background-color: #ffc6e6; /* Verde Agro */
+    background-color: #ffc6e6; 
     color: white;
     padding: 15px;
     text-align: center;
     border-bottom: 4px solid #ff8ae4;
 }
-.topo-resultado h2 { margin: 0; font-size: 18px; }
-.pontos-finais { font-size: 22px; font-weight: bold; margin-top: 5px; }
 
-/* Estilo da área rolável do Site */
+.topo-resultado h2 { 
+    margin: 0; 
+    font-size: 18px; 
+}
+
+.pontos-finais { 
+    font-size: 22px; 
+    font-weight: bold; 
+    margin-top: 5px; 
+}
+
 .conteudo-site-rolavel {
-    
     padding: 20px;
-    overflow-y: auto; 
-    flex: 1; 
+    height: 400px; 
+    overflow-y: auto;
+    flex: 1;
     background-color: #ffffff;
     text-align: left;
     font-family: sans-serif;
+    scrollbar-width: thin; 
 }
